@@ -1,0 +1,23 @@
+{
+  "name": "StarWarsAPIViewer",
+  "version": "1.0.0",
+  "description": "A simple starship sales site.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://calebbartholomew@github.com/calebbartholomew/StarWarsAPIViewer.git"
+  },
+  "author": "Caleb Bartholomew",
+  "license": "(c) 2015 Caleb Bartholomew",
+  "bugs": {
+    "url": "https://github.com/calebbartholomew/StarWarsAPIViewer/issues"
+  },
+  "homepage": "https://github.com/calebbartholomew/StarWarsAPIViewer",
+  "dependencies": {
+    "express": "^4.12.4",
+    "jade": "^1.10.0"
+  }
+}
