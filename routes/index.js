@@ -1,3 +1,6 @@
+var React    = require('react');
+var ShipsApp = require(__dirname + '/../bin/jsx/components/ShipsApp');
+
 module.exports = exports = function(app) {
 	var scripts = [];
 
@@ -12,9 +15,16 @@ module.exports = exports = function(app) {
 		scripts.push({type: 'text/javascript', url: '/client.min.js'});
 	}
 
+	//
+	// Setup routes
+	//
 	app.get('/', function(req, res) {
+
+		var markup = React.renderToString(React.createElement(ShipsApp,{}));
+
 		res.render('index', {
-			scripts: scripts
+			scripts: scripts,
+			markup: markup
 		});
 	});
 }
