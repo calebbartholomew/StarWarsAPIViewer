@@ -10,13 +10,31 @@
 var express = require('express');
 var app     = express();
 var colors  = require('colors');
+var fs      = require('fs');
 
 //
 // Configure Express
 //
 app.set('port', process.env.PORT     || 3000);
-app.set('env',  process.env.NODE_ENV || 'development')
+app.set('env',  process.env.NODE_ENV || 'development');
+app.set('views', __dirname + '/views/');
+app.set('view engine', 'jade');
 
+app.use(express.static('public'));
+app.use(express.static('node_modules/react/dist'));
+app.use(express.static('bin/public'));
+
+//
+// Load routes
+//
+fs.readdirSync(__dirname + '/routes').forEach(function(file) {
+	try {
+		require(__dirname + '/routes/' + file)(app);
+	} catch(error) {
+		console.log('Routes for file %s failed to load.', file);
+		console.error(error.stack);
+	}
+});
 
 //
 // Start listening for connections
