@@ -18,11 +18,11 @@ module.exports = ShipsList = React.createClass({
 							<tr>
 								<th className="col-md-6">
 									Name 
-									<SortButtons />
+									<SortButtons sort={this.props.name}/>
 								</th>
 								<th className="col-md-6">
-									Price
-									<SortButtons />
+									Cost <small>(Galactic Credits)</small>
+									<SortButtons sort={this.props.cost}/>
 								</th>
 							</tr>
 						</thead>

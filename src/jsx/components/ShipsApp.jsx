@@ -21,14 +21,15 @@ module.exports = ShipsApp = React.createClass({
 			dataType: 'json',
 			cache: false,
 			success: function(data) {
-				this.setState({ships: this.state.ships.concat(data.results)});
+				this.setState({ships: this.state.ships.concat(data.results)}, function(){
 
-				this.filterShips();
+					this.filterShips(function(){
+						if(typeof data.next !== 'undefined') {
+							this.loadShips(data.next);
+						}
+					});
 
-				if(typeof data.next !== 'undefined') {
-					this.loadShips(data.next);
-				}
-
+				}.bind(this));
 			}.bind(this),
 			error: function(xhr, status, err) {
 				console.error(shipsURL, status, err);
@@ -36,10 +37,11 @@ module.exports = ShipsApp = React.createClass({
 		});
 	},
 	setFilters: function(filters){
-		this.setState({filters: filters, filtersDirty: true});
-		this.filterShips();
+		this.setState({filters: filters, filtersDirty: true}, function(){
+			this.filterShips();
+		});
 	},
-	filterShips: function() {
+	filterShips: function(cb) {
 		var filteredShips = this.state.ships;
 
 		//
@@ -53,7 +55,7 @@ module.exports = ShipsApp = React.createClass({
 					return 0;
 				});
 
-				if(this.state.sort.dir === 'dec'){
+				if(this.state.sort.dir === 'dsc'){
 					filteredShips.reverse();
 				}
 			break;
@@ -77,7 +79,7 @@ module.exports = ShipsApp = React.createClass({
 					return 0;
 				});
 
-				if(this.state.sort.dir === 'dec') {
+				if(this.state.sort.dir === 'dsc') {
 					filteredShips.reverse();
 				}
 			break;
@@ -123,9 +125,12 @@ module.exports = ShipsApp = React.createClass({
 
 		if(typeof this.state.filters.searchTerm !== 'undefined'){
 			filteredShips = filteredShips.filter(function(ship){
-
 				var searchString = ' ';
 
+				//
+				// Scrunch everything into one string so we only need to search
+				// one string.
+				//
 				for(var prop in ship) {
 					if(Array.isArray(ship[prop])) {
 						searchString += ship[prop].join(' ');
@@ -141,7 +146,27 @@ module.exports = ShipsApp = React.createClass({
 			}.bind(this));
 		}
 
-		this.setState({filteredShips: filteredShips});
+		this.setState({filteredShips: filteredShips}, cb);
+	},
+	sortNameAsc: function(){
+		this.setState({sort: {by: 'name', dir: 'asc'}}, function(){
+			this.filterShips();
+		});
+	},
+	sortNameDsc: function(){
+		this.setState({sort: {by: 'name', dir: 'dsc'}}, function(){
+			this.filterShips();
+		});
+	},
+	sortCostAsc: function(){
+		this.setState({sort: {by: 'cost', dir: 'asc'}}, function(){
+			this.filterShips();
+		});
+	},
+	sortCostDsc: function(){
+		this.setState({sort: {by: 'cost', dir: 'dsc'}}, function(){
+			this.filterShips();
+		});
 	},
 	getInitialState: function() {
 		return {
@@ -157,10 +182,19 @@ module.exports = ShipsApp = React.createClass({
 		this.loadShips('http://swapi.co/api/starships/');
 	},
 	render: function() {
+		var name = {
+			asc: this.sortNameAsc,
+			dsc: this.sortNameDsc
+		};
+
+		var cost = {
+			asc: this.sortCostAsc,
+			dsc: this.sortCostDsc
+		}
 		return (
 			<div className="ships-app row">
 				<SiteHeader />
-				<ShipsBox ships={this.state.filteredShips} />
+				<ShipsBox ships={this.state.filteredShips} name={name} cost={cost}/>
 			</div>
 		)
 	}
