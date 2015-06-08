@@ -6,9 +6,9 @@ module.exports = ShipsList = React.createClass({
 	render: function() {
 		var shipNodes = this.props.ships.length <= 0 ? [] : this.props.ships.map(function(ship){
 			return (
-				<ShipListItem ship={ship} />
+				<ShipListItem ship={ship} shipDetails={this.props.shipDetails} />
 			)
-		});
+		}.bind(this));
 
 		return (
 			<div className="ships-list col-xs-8 col-md-10">

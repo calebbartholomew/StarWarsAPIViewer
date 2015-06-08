@@ -43,11 +43,74 @@ $motherland: motherlandregular;
 
 	padding: 0;
 	background-color: rgb(250, 250, 250);
+	overflow: hidden;
 }
 
-.filter-box {
-	h5 {
-		margin: 20px 0 10px 0;
+.ship-details {
+	display: block;
+
+	-webkit-transition: left 1.5s;
+	transition: left 1.5s;
+
+	float: right;
+	position: absolute;
+	height: 80%;
+	width: 60%;
+	bottom: 10%;
+	left: 120%;
+
+	background-color: rgb(220,220,220);
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+
+	box-shadow: -3px 0px 10px 0px rgba(100,100,100,.5);
+
+	z-index: 100;
+
+	padding: 10px;
+
+
+	&.opened {
+		left: 40%;
+	}
+
+	.content {
+		padding: 0 20px 0 20px;
+	}
+}
+
+.pilot-details {
+	display: block;
+
+	-webkit-transition: left 1.5s;
+	transition: left 1.5s;
+
+	float: right;
+	position: absolute;
+	height: 60%;
+	width: 60%;
+	bottom: 15%;
+	left: 120%;
+
+	background-color: rgb(220,220,220);
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+
+	box-shadow: -3px 0px 10px 0px rgba(100,100,100,.5);
+
+	z-index: 100;
+
+	padding: 10px;
+
+
+	&.opened {
+		left: 45%;
+	}
+
+	.content {
+		padding: 0 20px 0 20px;
 	}
 }
 
@@ -78,16 +141,33 @@ $motherland: motherlandregular;
 	.table-header {
 		background-color: rgba(255,255,255,.95);
 	}
-}
 
-th {
-	small {
-		font-weight: 200;
-		color: rgb(119,119,119);
+	th {
+		small {
+			font-weight: 200;
+			color: rgb(119,119,119);
+		}
 	}
 }
 
+.ship-list-item, .pilot-tag {
+	cursor: pointer;
+}
+
+.filter-box {
+	h5 {
+		margin: 20px 0 10px 0;
+	}
+}
+
+
 .currency-symbol {
 	height: 1em;
-	margin-right: .3em;
+}
+
+.list-price {
+	margin-left: .3em;
+}
+.film-tag, .pilot-tag {
+	margin: 0 .1em 0 .1em;
 }

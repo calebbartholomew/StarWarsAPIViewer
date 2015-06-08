@@ -195,6 +195,10 @@ module.exports = ShipsApp = React.createClass({
 		// entries in the SWAPI database.
 		this.loadShips('http://swapi.co/api/starships/');
 	},
+
+	//
+	// Render function
+	//
 	render: function() {
 		var sorters = {
 			name: {
