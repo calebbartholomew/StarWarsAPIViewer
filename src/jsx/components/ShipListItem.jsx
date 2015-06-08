@@ -4,8 +4,8 @@ module.exports = ShipListItem = React.createClass({
 	render: function() {
 		return (
 			<tr className="ship-list-item">
-				<td>I&#39;m a ship!</td>
-				<td>15k Credits</td>
+				<td className="col-md-6">{this.props.ship.name}</td>
+				<td className="col-md-6">{this.props.ship.cost_in_credits}</td>
 			</tr>
 		)
 	}

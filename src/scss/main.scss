@@ -61,4 +61,21 @@ $motherland: motherlandregular;
 			opacity: 1;
 		}
 	}
+
+	.table-scroll {
+		height: 100%;
+		overflow: none;
+		overflow-y: scroll;
+
+		padding-top: 3.2em;
+	}
+
+	.table-fixed {
+		position: absolute;
+		top: 0;
+	}
+
+	.table-header {
+		background-color: rgba(255,255,255,.95);
+	}
 }

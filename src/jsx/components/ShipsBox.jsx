@@ -7,7 +7,7 @@ module.exports = ShipsBox = React.createClass({
 		return (
 			<div className="ships-box col-md-12">
 				<SideBar />
-				<ShipsList />
+				<ShipsList ships={this.props.ships} />
 			</div>
 		)
 	}
