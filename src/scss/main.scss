@@ -7,14 +7,25 @@ $motherland: motherlandregular;
 .site-header {
 	margin: 0;
 
+	box-sizing: border-box;
+
+	height: 129px;
+	padding: 60px 10px 47px 10px;
+
 	.logo {
 		font: 4rem $motherland;
+		color: #FF5555;
+
+		position: fixed;
+		top: 10px;
+		left: 10px;
 	}
 }
 
 .side-bar {
-	background-color: #FF8888;
 	height: 100%;
+
+	background-color: rgb(230, 230, 230);
 }
 
 .ships-box {
@@ -27,6 +38,5 @@ $motherland: motherlandregular;
 	height: auto;
 
 	padding: 0;
-
-	background-color: #88FF88;
+	background-color: rgb(250, 250, 250);
 }
