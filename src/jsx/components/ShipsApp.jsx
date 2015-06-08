@@ -121,6 +121,26 @@ module.exports = ShipsApp = React.createClass({
 			}.bind(this));
 		}
 
+		if(typeof this.state.filters.searchTerm !== 'undefined'){
+			filteredShips = filteredShips.filter(function(ship){
+
+				var searchString = ' ';
+
+				for(var prop in ship) {
+					if(Array.isArray(ship[prop])) {
+						searchString += ship[prop].join(' ');
+					} else {
+						searchString += ' '+ ship[prop];
+					}
+				}
+
+				if( RegExp(this.state.filters.searchTerm,'ig').test( searchString )){
+					return true;
+				}
+
+			}.bind(this));
+		}
+
 		this.setState({filteredShips: filteredShips});
 	},
 	getInitialState: function() {
