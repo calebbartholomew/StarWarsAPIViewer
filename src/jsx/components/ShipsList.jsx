@@ -1,6 +1,6 @@
 var React        = require('react');
 var ShipListItem = require('./ShipListItem');
-var SortButton   = require('./SortButton');
+var SortButtons  = require('./SortButtons');
 
 module.exports = ShipsList = React.createClass({
 	render: function() {
@@ -18,11 +18,11 @@ module.exports = ShipsList = React.createClass({
 							<tr>
 								<th className="col-md-6">
 									Name 
-									<SortButton />
+									<SortButtons />
 								</th>
 								<th className="col-md-6">
 									Price
-									<SortButton />
+									<SortButtons />
 								</th>
 							</tr>
 						</thead>
