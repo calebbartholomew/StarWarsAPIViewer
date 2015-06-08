@@ -6,7 +6,7 @@ module.exports = FilterBox = React.createClass({
 		return (
 			<div className="filter-box">
 				<h3><small>Stay on Target</small></h3>
-				<PriceFilter />
+				<PriceFilter minFilter={this.props.filters.setMin} maxFilter={this.props.filters.setMax}/>
 			</div>
 		)
 	}

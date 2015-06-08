@@ -36,11 +36,6 @@ module.exports = ShipsApp = React.createClass({
 			}.bind(this)
 		});
 	},
-	setFilters: function(filters){
-		this.setState({filters: filters, filtersDirty: true}, function(){
-			this.filterShips();
-		});
-	},
 	filterShips: function(cb) {
 		var filteredShips = this.state.ships;
 
@@ -91,7 +86,7 @@ module.exports = ShipsApp = React.createClass({
 		//
 		// Now filter out items that don't match our bounds.
 		//
-		if(typeof this.state.filters.min !== 'undefined'){
+		if(this.state.filters.min){
 			filteredShips = filteredShips.filter(function(ship){
 				
 				// If we don't know the price, show it anyway.
@@ -107,7 +102,7 @@ module.exports = ShipsApp = React.createClass({
 			}.bind(this));
 		}
 
-		if(typeof this.state.filters.max !== 'undefined'){
+		if(this.state.filters.max){
 			filteredShips = filteredShips.filter(function(ship){
 				
 				// If we don't know the price, show it anyway.
@@ -115,7 +110,7 @@ module.exports = ShipsApp = React.createClass({
 					return true;
 				}
 
-				if(Number(ship.cost_in_credits) <= this.state.filters.min){
+				if(Number(ship.cost_in_credits) <= this.state.filters.max){
 					return true;
 				}
 
@@ -123,7 +118,7 @@ module.exports = ShipsApp = React.createClass({
 			}.bind(this));
 		}
 
-		if(typeof this.state.filters.searchTerm !== 'undefined'){
+		if(this.state.filters.searchTerm){
 			filteredShips = filteredShips.filter(function(ship){
 				var searchString = ' ';
 
@@ -168,6 +163,25 @@ module.exports = ShipsApp = React.createClass({
 			this.filterShips();
 		});
 	},
+	searchShips: function(searchTerm) {
+		this.setState({filters: {searchTerm: searchTerm}}, function(){
+			this.filterShips();
+		});
+	},
+	setMin: function(enabled, value) {
+		var min = enabled === true ? value : null;
+
+		this.setState({filters: {min: min}}, function(){
+			this.filterShips();
+		});
+	},
+	setMax: function(enabled, value) {
+		var max = enabled === true ? value : null;
+
+		this.setState({filters: {max: max}}, function(){
+			this.filterShips();
+		});
+	},
 	getInitialState: function() {
 		return {
 			ships:[], 
@@ -182,19 +196,26 @@ module.exports = ShipsApp = React.createClass({
 		this.loadShips('http://swapi.co/api/starships/');
 	},
 	render: function() {
-		var name = {
-			asc: this.sortNameAsc,
-			dsc: this.sortNameDsc
+		var sorters = {
+			name: {
+				asc: this.sortNameAsc,
+				dsc: this.sortNameDsc
+			}, 
+			cost: {
+				asc: this.sortCostAsc,
+				dsc: this.sortCostDsc
+			}
 		};
 
-		var cost = {
-			asc: this.sortCostAsc,
-			dsc: this.sortCostDsc
-		}
+		var filters = {
+			setMin: this.setMin,
+			setMax: this.setMax
+		};
+
 		return (
 			<div className="ships-app row">
-				<SiteHeader />
-				<ShipsBox ships={this.state.filteredShips} name={name} cost={cost}/>
+				<SiteHeader searchShips={this.searchShips}/>
+				<ShipsBox ships={this.state.filteredShips} sorters={sorters} filters={filters}/>
 			</div>
 		)
 	}

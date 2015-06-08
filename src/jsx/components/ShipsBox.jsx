@@ -6,8 +6,8 @@ module.exports = ShipsBox = React.createClass({
 	render: function() {
 		return (
 			<div className="ships-box col-md-12">
-				<SideBar />
-				<ShipsList ships={this.props.ships} name={this.props.name} cost={this.props.cost}/>
+				<SideBar filters={this.props.filters}/>
+				<ShipsList ships={this.props.ships} sorters={this.props.sorters}/>
 			</div>
 		)
 	}
