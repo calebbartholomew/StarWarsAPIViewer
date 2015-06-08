@@ -21,8 +21,6 @@ app.set('views', __dirname + '/views/');
 app.set('view engine', 'jade');
 
 app.use(express.static('public'));
-app.use(express.static('node_modules/react/dist'));
-app.use(express.static('bin/public'));
 
 //
 // Load routes

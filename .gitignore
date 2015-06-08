@@ -1,2 +1,5 @@
 node_modules/
 bin/
+public/js/
+public/css/
+.sass-cache/

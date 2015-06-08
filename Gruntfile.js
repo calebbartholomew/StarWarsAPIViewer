@@ -9,12 +9,31 @@ module.exports = function(grunt) {
     // Compile our jsx to js.
     //
     react: {
-      client: {
+      dist: {
         expand: true,
         cwd: 'src/jsx',
         src: ['**/*.jsx'],
-        dest: 'bin/jsx/',
+        dest: 'bin/js/',
         ext: '.js'
+      }
+    },
+
+    //
+    // Compile our scss
+    //
+    sass: {
+      dist: {
+        options: {
+          style: 'expanded',
+          sourcemap: 'none'
+        },
+        files: [{
+          expand: true,
+          cwd: 'src/scss',
+          src: ['**/*.scss'],
+          dest: 'bin/css/styles',
+          ext: '.css'
+        }]
       }
     },
 
@@ -22,9 +41,13 @@ module.exports = function(grunt) {
     // Clump everything together.
     //
     concat: {
-      client: {
-        src:  ['bin/jsx/components/**/*.js','bin/jsx/app.js'],
-        dest: 'bin/tmp-client.js'
+      scripts: {
+        src:  ['bin/js/components/**/*.js','bin/js/app.js'],
+        dest: 'bin/client.js'
+      },
+      styles: {
+        src:  ['bin/css/**/*.css'],
+        dest: 'public/css/style.css'
       }
     },
 
@@ -35,9 +58,9 @@ module.exports = function(grunt) {
     // we can use our react code in the browser.
     //
     'string-replace': {
-      client: {
+      dist: {
         files: {
-          'bin/public/client.js': 'bin/tmp-client.js'
+          'public/js/client.js': 'bin/client.js'
         },
         options: {
           replacements: [{
@@ -55,13 +78,40 @@ module.exports = function(grunt) {
     // Make the script smaller!
     //
     uglify: {
-      client: {
+      dist: {
         options: {
           mangle: false
         },
         files: {
-          'bin/public/client.min.js': ['bin/public/client.js']
+          'public/js/client.min.js': ['public/js/client.js']
         }
+      }
+    },
+
+    //
+    // Make the style smaller.
+    //
+    cssmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'public/css/',
+          src: ['style.css'],
+          dest: 'public/css/',
+          ext: '.min.css'
+        }]
+      }
+    },
+
+    //
+    // Copy other resources and libraries
+    //
+    copy: {
+      dist: {
+        files: [
+          // React.js
+          {expand: true, flatten: true, src: ['node_modules/react/dist/*.js'], dest: 'public/js', filter: 'isFile'}
+        ]
       }
     },
 
@@ -70,8 +120,24 @@ module.exports = function(grunt) {
     //
     watch: {
       scripts: {
-        files: ['src/**/*.jsx'],
-        tasks: ['build'],
+        files: ['src/jsx/**/*.jsx'],
+        tasks: ['build:scripts'],
+        options: {
+          spawn: false,
+          atBegin: true
+        }
+      },
+      styles: {
+        files: ['src/scss/**/*.scss'],
+        tasks: ['build:styles'],
+        options: {
+          spawn: false,
+          atBegin: true
+        }
+      },
+      resources: {
+        files: ['node_modules/react/dist/*.js'],
+        tasks: ['build:copy'],
         options: {
           spawn: false,
           atBegin: true
@@ -97,11 +163,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-available-tasks');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-string-replace');
+  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   //
   // Create tasks
   //
-  grunt.registerTask('build', ['react', 'concat', 'string-replace', 'uglify']);
+  grunt.registerTask('build:scripts', ['react', 'concat', 'string-replace', 'uglify']);
+  grunt.registerTask('build:styles', ['sass', 'concat:styles', 'cssmin']);
+  grunt.registerTask('build:copy', ['copy']);
+  grunt.registerTask('build', ['build:copy', 'build:styles', 'build:scripts']);
 
 
   //

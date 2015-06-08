@@ -1,0 +1,18 @@
+//fonts
+$font_0: motherlandregular;
+
+//urls
+$url_0: url(/fonts/motherland-webfont.eot);
+$url_1: url(/fonts/motherland-webfont.eot?#iefix);
+$url_2: url(/fonts/motherland-webfont.woff2);
+$url_3: url(/fonts/motherland-webfont.woff);
+$url_4: url(/fonts/motherland-webfont.ttf);
+$url_5: url(/fonts/motherland-webfont.svg#motherlandregular);
+
+@font-face {
+	font-family: $font_0;
+	src: $url_0;
+	src: $url_1 format('embedded-opentype'), $url_2 format('woff2'), $url_3 format('woff'), $url_4 format('truetype'), $url_5 format('svg');
+	font-weight: normal;
+	font-style: normal;
+}

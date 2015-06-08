@@ -3,7 +3,9 @@ html
 		title Ships R Us
 
 		each scrpt in scripts
-			script(type=scrpt.type, src=scrpt.url)
+			script(type=scrpt.type, src=scrpt.src)
 
-	body
-		div(id='ships-app')!= markup
+		each styl in styles
+			link(rel=styl.rel, type=styl.type, href=styl.href)
+
+	body(id='mount-point', class='container-fluid')!= markup
