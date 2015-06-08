@@ -4,7 +4,7 @@ module.exports = SiteHeader = React.createClass({
 	render: function() {
 		return (
 			<nav className="site-header navbar navbar-default" role="search">
-				<span className="logo">SHIPS R US <img src="/images/ship.png" /></span>
+				<span className="logo">S<img src="/images/ship.png" />IPS R US</span>
 				<div className="form-group">
 					<div className="input-group">
 						<input type="text" className="form-control" placeholder="Force Search..." />
